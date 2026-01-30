@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #ff4d6d;
+        }
+        
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #555;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+        
+        .heart-icon {
+            font-size: 5rem;
+            color: #ff4d6d;
+            margin: 20px 0;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        .message-box {
+            background-color: #fff0f3;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 6px solid #ff4d6d;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.1);
+            text-align: left;
+        }
+        
+        .message-box p {
+            color: #333;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.4rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            min-width: 180px;
+        }
+        
+        .yes-btn {
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            color: white;
+        }
+        
+        .yes-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
+        }
+        
+        .no-btn {
+            background: linear-gradient(to right, #6c757d, #adb5bd);
+            color: white;
+            position: relative;
+        }
+        
+        /* The "No" button moves away when hovered or clicked */
+        .no-btn:hover, .no-btn:active {
+            transform: translateX(calc((var(--random-x, 0) * 1px))) translateY(calc((var(--random-y, 0) * 1px)));
+        }
+        
+        .hearts-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 77, 109, 0.2);
+            animation: float 8s infinite linear;
+        }
+        
+        .response-message {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            border-radius: 20px;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            animation: fadeIn 1s ease;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            font-size: 1rem;
+            color: #777;
+            font-style: italic;
+        }
+        
+        /* Animations */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.1); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 15px 30px;
+                font-size: 1.2rem;
+                min-width: 150px;
+            }
+            
+            .container {
+                padding: 30px 20px;
+                border-width: 5px;
+            }
+            
+            .buttons-container {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+                min-width: 130px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .message-box p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hearts-background" id="hearts-bg"></div>
+        
+        <h1>Will You Be My Valentine?</h1>
+        <div class="heart-icon">
+            <i class="fas fa-heart"></i>
+        </div>
+        <p class="subtitle">This is a very important question, so please think carefully before answering!</p>
+        
+        <div class="message-box">
+            <p>My dearest love,</p>
+            <p>From the moment we met, you've filled my life with joy and happiness. Every day with you is special, but Valentine's Day is the perfect opportunity to ask you this important question.</p>
+            <p>Will you make me the happiest person in the world and be my Valentine?</p>
+            <p>With all my love,</p>
+            <p>Your devoted partner ❤️</p>
+        </div>
+        
+        <div class="buttons-container">
+            <button class="btn yes-btn" id="yesBtn">
+                <i class="fas fa-check-circle"></i> YES!
+            </button>
+            <button class="btn no-btn" id="noBtn">
+                <i class="fas fa-times-circle"></i> No
+            </button>
+        </div>
+        
+        <div class="response-message" id="responseMessage">
+            <i class="fas fa-heart"></i> You've made me the happiest person! I love you! <i class="fas fa-heart"></i>
+        </div>
+        
+        <p class="instructions">Hint: The "No" button might be a bit tricky to click 😉</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            const responseMessage = document.getElementById('responseMessage');
+            const heartsBg = document.getElementById('hearts-bg');
+            
+            // Create floating hearts in background
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+                heartsBg.appendChild(heart);
+            }
+            
+            // Handle "Yes" button click
+            yesBtn.addEventListener('click', function() {
+                responseMessage.style.display = 'block';
+                yesBtn.style.display = 'none';
+                noBtn.style.display = 'none';
+                
+                // Create celebration hearts
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.classList.add('heart');
+                        heart.innerHTML = '<i class="fas fa-heart"></i>';
+                        heart.style.left = Math.random() * 100 + '%';
+                        heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                        heart.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+                        heart.style.color = '#ff4d6d';
+                        document.body.appendChild(heart);
+                        
+                        // Remove heart after animation
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 5000);
+                    }, i * 100);
+                }
+            });
+            
+            // Handle "No" button interactions - make it move away
+            noBtn.addEventListener('mouseover', function() {
+                moveNoButton();
+            });
+            
+            noBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveNoButton();
+            });
+            
+            noBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                moveNoButton();
+            });
+            
+            function moveNoButton() {
+                // Get button dimensions and container dimensions
+                const container = document.querySelector('.container');
+                const containerRect = container.getBoundingClientRect();
+                const buttonRect = noBtn.getBoundingClientRect();
+                
+                // Calculate maximum movement within container
+                const maxX = containerRect.width - buttonRect.width - 20;
+                const maxY = containerRect.height - buttonRect.height - 20;
+                
+                // Generate random position within container
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+                
+                // Set CSS custom properties for movement
+                noBtn.style.setProperty('--random-x', randomX);
+                noBtn.style.setProperty('--random-y', randomY);
+                
+                // Also move it with transform for immediate feedback
+                noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                
+                // Change button text occasionally
+                const messages = [
+                    "Are you sure?",
+                    "Think again!",
+                    "Really?",
+                    "Try again!",
+                    "Not an option!",
+                    "You can't click me!",
+                    "Nice try!",
+                    "I'm slippery!",
+                    "Too slow!",
+                    "Catch me if you can!"
+                ];
+                
+                if (Math.random() > 0.7) {
+                    const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+                    noBtn.innerHTML = `<i class="fas fa-times-circle"></i> ${randomMsg}`;
+                    
+                    // Reset after a moment
+                    setTimeout(() => {
+                        noBtn.innerHTML = '<i class="fas fa-times-circle"></i> No';
+                    }, 1000);
+                }
+            }
+            
+            // Initialize with some random movement for the "No" button
+            moveNoButton();
+        });
+    </script>
+</body>
+</html>
